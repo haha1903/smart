@@ -74,12 +74,10 @@ class TableQueryExt[E <: AbstractTable[_]](cons: Tag => E) extends TableQuery[E]
 
 object TableQueryExt {
   /** Create a TableQuery for a table row class using an arbitrary constructor function. */
-  def apply[E <: AbstractTable[_]](cons: Tag => E): TableQuery[E] =
-    new TableQuery[E](cons)
+  def apply[E <: AbstractTable[_]](cons: Tag => E): TableQuery[E] = new TableQueryExt[E](cons)
 
   /** Create a TableQuery for a table row class which has a constructor of type (Tag). */
-  def apply[E <: AbstractTable[_]]: TableQuery[E] =
-  macro TableQueryExtMacroImpl.apply[E]
+  def apply[E <: AbstractTable[_]]: TableQuery[E] = macro TableQueryExtMacroImpl.apply[E]
 }
 
 object TableQueryExtMacroImpl {
