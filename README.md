@@ -2,7 +2,7 @@
 
 ## Build & Run ##
 
-    执行 **sbt publish** 发布到 maven 库
+    执行 sbt publish 发布到 maven 库
 
 # 使用
 
