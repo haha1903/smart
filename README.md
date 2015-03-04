@@ -8,14 +8,14 @@
 
 sbt 中
 
-    libraryDependencies += "com.baidu" %% "smartext" % "1.0.0-SNAPSHOT"
+    libraryDependencies += "com.baidu" %% "smartext" % "1.0.0"
 
 maven 中
 
     <dependency>
         <groupId>com.baidu</groupId>
         <artifactId>smartext_2.11</artifactId>
-        <version>1.0.0-SNAPSHOT</version/
+        <version>1.0.0</version/
     </dependency>
 
 # 功能
