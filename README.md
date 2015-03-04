@@ -2,11 +2,27 @@
 
 ## Build & Run ##
 
-```sh
-$ cd SmartExt
-$ ./sbt
-> container:start
-> browse
-```
+    执行 **sbt publish** 发布到 maven 库
 
-If `browse` doesn't launch your browser, manually open [http://localhost:8080/](http://localhost:8080/) in your browser.
+# 使用
+
+sbt 中
+
+    libraryDependencies += **"com.baidu" %% "smartext" % "1.0.0-SNAPSHOT",**
+
+maven 中
+
+    <dependency>
+        <groupId>com.baidu</groupId>
+        <artifactId>smartext_2.11</artifactId>
+        <version>1.0.0-SNAPSHOT</version/
+    </dependency>
+
+# 功能
+
+- 提供 SmartErrorHandler，兼容前端 json 数据格式
+- 提供 SmartValueResult，兼容前端 json 数据格式
+- 提供 ServiceSupport，支持 Swagger
+- 提供 ConfigSupport，支持 Hocon config
+- 提供 Sharding & MySQLDriverExt 支持 DB Sharding
+- 提供 SmartDataSourceSupport，支持 Slick
