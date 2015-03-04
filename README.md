@@ -8,7 +8,7 @@
 
 sbt 中
 
-    libraryDependencies += **"com.baidu" %% "smartext" % "1.0.0-SNAPSHOT",**
+    libraryDependencies += **"com.baidu" %% "smartext" % "1.0.0-SNAPSHOT"**
 
 maven 中
 
