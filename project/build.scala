@@ -4,7 +4,7 @@ import Keys._
 object SmartextBuild extends Build {
   val Organization = "com.baidu"
   val Name = "SmartExt"
-  val Version = "1.0.0-SNAPSHOT"
+  val Version = "1.0.0"
   val ScalaVersion = "2.11.5"
   val ScalatraVersion = "2.3.6"
   val SlickVersion = "2.1.0"
