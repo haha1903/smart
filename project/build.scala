@@ -3,7 +3,7 @@ import sbt.Keys._
 
 object build extends Build {
   val Organization = "com.baidu"
-  val Version = "1.1.0-SNAPSHOT"
+  val Version = "1.1.0"
   val ScalaVersion = "2.11.5"
   val ScalatraVersion = "2.3.6"
   val SlickVersion = "2.1.0"
