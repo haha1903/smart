@@ -3,7 +3,7 @@ import sbt.Keys._
 
 object build extends Build {
   val Organization = "com.baidu"
-  val Version = "1.1.2-SNAPSHOT"
+  val Version = "1.1.1"
   val ScalaVersion = "2.11.5"
   val ScalatraVersion = "2.3.6"
   val SlickVersion = "2.1.0"
@@ -12,7 +12,7 @@ object build extends Build {
     id = "smart",
     base = file("."),
     settings = Seq(publish := {}, publishLocal := {}),
-    aggregate = Seq(smartCore, smartExt)
+    aggregate = Seq(smartCore, smartExt, kick)
   )
 
   lazy val smartCore = Project(
