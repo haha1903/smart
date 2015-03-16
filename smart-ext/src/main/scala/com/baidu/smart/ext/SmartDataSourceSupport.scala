@@ -2,6 +2,8 @@ package com.baidu.smart.ext
 
 import javax.sql.DataSource
 
+import com.baidu.smart.core.ConfigSupport
+
 import scala.slick.driver.MySQLDriver.simple._
 
 /**
