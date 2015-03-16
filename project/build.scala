@@ -3,7 +3,7 @@ import sbt.Keys._
 
 object build extends Build {
   val Organization = "com.baidu"
-  val Version = "1.1.1-SNAPSHOT"
+  val Version = "1.1.1"
   val ScalaVersion = "2.11.5"
   val ScalatraVersion = "2.3.6"
   val SlickVersion = "2.1.0"
@@ -40,6 +40,18 @@ object build extends Build {
         "org.scalatra" %% "scalatra-swagger" % ScalatraVersion,
         "com.typesafe.slick" %% "slick" % SlickVersion,
         "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided"
+      )
+    )
+  ).dependsOn(smartCore)
+
+  lazy val kick = Project(
+    "kick",
+    file("kick"),
+    settings = generalSetting ++ Seq(
+      name := "kick",
+      libraryDependencies ++= Seq(
+        "ch.qos.logback" % "logback-classic" % "1.1.2",
+        "net.debasishg" %% "redisclient" % "2.13"
       )
     )
   ).dependsOn(smartCore)
