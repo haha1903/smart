@@ -3,7 +3,7 @@ import sbt.Keys._
 
 object build extends Build {
   val Organization = "com.baidu"
-  val Version = "1.1.2-SNAPSHOT"
+  val Version = "1.1.2"
   val ScalaVersion = "2.11.5"
   val ScalatraVersion = "2.3.6"
   val SlickVersion = "2.1.0"
@@ -35,10 +35,18 @@ object build extends Build {
       name := "smart-ext",
       libraryDependencies ++= Seq(
         "ch.qos.logback" % "logback-classic" % "1.1.2",
+        "org.springframework.scala" %% "spring-scala" % "1.2.1",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-commands" % ScalatraVersion,
         "org.scalatra" %% "scalatra-swagger" % ScalatraVersion,
         "com.typesafe.slick" %% "slick" % SlickVersion,
+        "com.baidu.nmp" % "nmp-client" % "1.14.0-RELEASE" excludeAll(
+          ExclusionRule("commons-httpclient"),
+          ExclusionRule("org.apache.httpcomponents"),
+          ExclusionRule("com.baidu.lego"),
+          ExclusionRule("com.google.guava"),
+          ExclusionRule("org.apache.poi", "poi-ooxml")
+          ),
         "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided"
       )
     )
@@ -63,8 +71,8 @@ object build extends Build {
     scalacOptions ++= Seq("-deprecation", "-feature"),
     resolvers ++= Seq("ma03" at "http://cq01-testing-ma03.vm.baidu.com:8304/archiva/repository/ma/",
       "nexus-m2" at "http://cq01-rdqa-pool106.cq01.baidu.com:8081/nexus/content/groups/public/",
-      Resolver.url("nexus-ivy", url("http://cq01-rdqa-pool106.cq01.baidu.com:8081/nexus/content/groups/public/"))(Resolver.ivyStylePatterns),
-      Classpaths.typesafeReleases),
+      Resolver.url("nexus-ivy", url("http://cq01-rdqa-pool106.cq01.baidu.com:8081/nexus/content/groups/public/"))(Resolver.ivyStylePatterns)
+    ),
     externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false),
     publishTo := Some("ma03" at "http://cq01-testing-ma03.vm.baidu.com:8304/archiva/repository/ma/"),
     credentials += Credentials(Path.userHome / ".ivy2" / ".ma03_credentials")
