@@ -1,5 +1,7 @@
 package com.baidu.smart.ext
 
+import org.eclipse.jetty.server.Server
+import org.eclipse.jetty.webapp.WebAppContext
 import org.scalatra.servlet.ScalatraListener
 
 object JettyLauncher extends App {

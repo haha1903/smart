@@ -3,7 +3,7 @@ import sbt.Keys._
 
 object build extends Build {
   val Organization = "com.baidu"
-  val Version = "1.1.3"
+  val Version = "1.1.4"
   val ScalaVersion = "2.11.5"
   val ScalatraVersion = "2.3.6"
   val SlickVersion = "2.1.0"
@@ -47,6 +47,7 @@ object build extends Build {
           ExclusionRule("com.google.guava"),
           ExclusionRule("org.apache.poi", "poi-ooxml")
           ),
+        "org.eclipse.jetty" % "jetty-runner" % "9.2.1.v20140609" % "provided",
         "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided"
       )
     )
