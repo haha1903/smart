@@ -1,5 +1,7 @@
 package com.baidu.kick
 
+import java.util.concurrent.Executors
+
 import com.baidu.smart.core.ConfigSupport
 import com.redis._
 import grizzled.slf4j.Logging

@@ -3,8 +3,10 @@ package com.baidu.smart.ext
 import java.lang.{Boolean, Double, Float, Long}
 import java.util
 
+import com.baidu.fengchao.stargate.assembly.AssemblyConstants
 import com.baidu.fengchao.stargate.assembly.model.StarBinding
-import com.baidu.fengchao.stargate.assembly.spring.schema.bean.{MonitorBean, ReferenceBean, ReferenceGlobalConfig, RegistryConfig}
+import com.baidu.fengchao.stargate.assembly.spring.schema.bean._
+import com.baidu.fengchao.stargate.common.utils.LocalCacheUtils
 import com.baidu.nmp.base.utils.property.{Key, PropertyFileReader}
 import com.baidu.nmp.base.utils.{BaseConfig, BaseConfigKey, BaseMessage, BaseMessageKey}
 import com.baidu.smart.core.ConfigSupport
@@ -104,50 +106,74 @@ abstract class SpringContextConfig extends FunctionalConfiguration with HoconCon
 
   // stargate global set, registry config, monitor
   def stargate() = {
-    val global = ReferenceGlobalConfig.getInstance
-    global.setFilter(getStringOr("stargate.filter", null))
-    global.setConcurrentTimeout(getIntOr("stargate.connectionTimeout", 0))
-    global.setCallTimeout(getLongOr("stargate.callTimeout", 0))
-    global.setConnections(getIntOr("stargate.connections", 0))
-    global.setLoadBalance(getStringOr("stargate.loadBalance", null))
-    global.setCluster(getStringOr("stargate.cluster", null))
-    global.setRetryTimes(getIntOr("stargate.retryTimes", 0))
-    global.setRetryPeriod(getIntOr("stargate.retryPeriod", 0))
-    global.setDirectURL(getStringOr("stargate.directURL", null))
-    global.setPort(getIntOr("stargate.port", -1))
-    global.setClusterAvailableCheck(getStringOr("stargate.clusterAvailableCheck", null))
-    global.setStatusExpireTime(getLongOr("stargate.statusExpireTime", 0))
-    global.setFailedCheck(getIntOr("stargate.failedCheck", 0))
-    global.setExecutorPoolSize(getLongOr("stargate.executorPoolSize", 0))
-    global.setExecutorMaxMemorySize(getLongOr("stargate.executorMaxMemorySize", 0))
-    global.setExecutorChannelMaxMemorySize(getLongOr("stargate.executorChannelMaxMemorySize", 0))
-    global.setExecutorKeepAliveTime(getLongOr("stargate.executorKeepAliveTime", 0))
-    val portRange = getStringOr("starget.portRange", "-1--1")
-    val portRangeP = """^([0-9\-]+?)-([0-9\-]+)$""".r
-    val portRangeP(min, max) = portRange
-    global.setPortMax(min.toInt)
-    global.setPortMin(max.toInt)
-    global.setRouter(getStringOr("stargate.router", null))
-    global.setRouterPriority(getIntOr("stargate.routerPriority", 0))
-    global.setRouterIdRuleLoc(getStringOr("stargate.routerIdRuleLoc", null))
-    global.setRouterIdRuleBuild(getStringOr("stargate.routerIdRuleBuild", null))
-    global.setRourerIdSrcAccess(getStringOr("stargate.rourerIdSrcAccess", null))
-    global.setRouterIdSrcIndex(getStringOr("stargate.routerIdSrcIndex", null))
-    global.setGroup(getStringOr("stargate.group", null))
-    global.setVersion(getStringOr("stargate.version", null))
-    global.setRegistry(getStringOr("stargate.registry", null))
+    // set reference global
+    val referenceGlobal = ReferenceGlobalConfig.getInstance
+    referenceGlobal.setFilter(getString("stargate.reference.filter"))
+    referenceGlobal.setConcurrentTimeout(getInt("stargate.reference.connectionTimeout"))
+    referenceGlobal.setCallTimeout(getLong("stargate.reference.callTimeout"))
+    referenceGlobal.setConnections(getInt("stargate.reference.connections"))
+    referenceGlobal.setLoadBalance(getString("stargate.reference.loadBalance"))
+    referenceGlobal.setCluster(getString("stargate.reference.cluster"))
+    referenceGlobal.setRetryTimes(getInt("stargate.reference.retryTimes"))
+    referenceGlobal.setRetryPeriod(getInt("stargate.reference.retryPeriod"))
+    referenceGlobal.setDirectURL(getString("stargate.reference.directURL"))
+    referenceGlobal.setPort(getInt("stargate.reference.port"))
+    referenceGlobal.setClusterAvailableCheck(getString("stargate.reference.clusterAvailableCheck"))
+    referenceGlobal.setStatusExpireTime(getLong("stargate.reference.statusExpireTime"))
+    referenceGlobal.setFailedCheck(getInt("stargate.reference.failedCheck"))
+    referenceGlobal.setExecutorPoolSize(getLong("stargate.reference.executorPoolSize"))
+    referenceGlobal.setExecutorMaxMemorySize(getLong("stargate.reference.executorMaxMemorySize"))
+    referenceGlobal.setExecutorChannelMaxMemorySize(getLong("stargate.reference.executorChannelMaxMemorySize"))
+    referenceGlobal.setExecutorKeepAliveTime(getLong("stargate.reference.executorKeepAliveTime"))
+    val portRange = getString("stargate.reference.portRange")
+    val (min, max) = splitPortRange(portRange)
+    referenceGlobal.setPortMax(min.toInt)
+    referenceGlobal.setPortMin(max.toInt)
+    referenceGlobal.setRouter(getString("stargate.reference.router"))
+    referenceGlobal.setRouterPriority(getInt("stargate.reference.routerPriority"))
+    referenceGlobal.setRouterIdRuleLoc(getString("stargate.reference.routerIdRuleLoc"))
+    referenceGlobal.setRouterIdRuleBuild(getString("stargate.reference.routerIdRuleBuild"))
+    referenceGlobal.setRourerIdSrcAccess(getString("stargate.reference.rourerIdSrcAccess"))
+    referenceGlobal.setRouterIdSrcIndex(getString("stargate.reference.routerIdSrcIndex"))
+    referenceGlobal.setGroup(getString("stargate.reference.group"))
+    referenceGlobal.setVersion(getString("stargate.reference.version"))
+    referenceGlobal.setRegistry(getString("stargate.reference.registry"))
+
+    // set service global
+    val serviceGlobal = ServiceGlobalConfig.getInstance
+    serviceGlobal.setExecutes(getInt("stargate.service.executes"))
+    serviceGlobal.setWeight(getInt("stargate.service.weight"))
+    serviceGlobal.setFilter(getString("stargate.service.filter"))
+    serviceGlobal.setExecutorPoolSize(getLong("stargate.service.executorPoolSize"))
+    serviceGlobal.setExecutorMaxMemorySize(getLong("stargate.service.executorMaxMemorySize"))
+    serviceGlobal.setExecutorChannelMaxMemorySize(getLong("stargate.service.executorChannelMaxMemorySize"))
+    serviceGlobal.setExecutorKeepAliveTime(getLong("stargate.service.executorKeepAliveTime"))
+
+    serviceGlobal.setRouterClusterTag(getString("stargate.service.routerClusterTag"))
+    serviceGlobal.setVersion(getString("stargate.service.version"))
+    serviceGlobal.setGroup(getString("stargate.service.group"))
+    serviceGlobal.setRegistry(getString("stargate.service.registry"))
+
+    if (hasPath("stargate.service.port")) {
+      LocalCacheUtils.set(AssemblyConstants.KEY_PROTOCOL_PORT_DIRECT, getString("port"))
+    } else if (hasPath("stargate.service.portRange")) {
+      val portRange = getString("stargate.service.portRange")
+      val (min, max) = splitPortRange(portRange)
+      LocalCacheUtils.set(AssemblyConstants.KEY_PROTOCOL_PORT_MIN, min)
+      LocalCacheUtils.set(AssemblyConstants.KEY_PROTOCOL_PORT_MAX, max)
+    }
 
     // registry config
     bean("default") {
       val rc = new RegistryConfig()
-      rc.setId(getStringOr("stargate.registry.id", "default"))
-      rc.setUsername(getStringOr("stargate.registry.username", null))
-      rc.setPassword(getStringOr("stargate.registry.password", null))
-      rc.setAddress(getStringOr("stargate.registry.address", null))
-      rc.setPath(getStringOr("stargate.registry.path", null))
-      rc.setBackup(getStringOr("stargate.registry.backup", null))
-      rc.setConnectionTimeout(getStringOr("stargate.registry.connectionTimeout", null))
-      rc.setSessionTimeout(getStringOr("stargate.registry.sessionTimeout", null))
+      rc.setId(getString("stargate.registry.id"))
+      rc.setUsername(getString("stargate.registry.username"))
+      rc.setPassword(getString("stargate.registry.password"))
+      rc.setAddress(getString("stargate.registry.address"))
+      rc.setPath(getString("stargate.registry.path"))
+      rc.setBackup(getString("stargate.registry.backup"))
+      rc.setConnectionTimeout(getString("stargate.registry.connectionTimeout"))
+      rc.setSessionTimeout(getString("stargate.registry.sessionTimeout"))
       rc
     }
 
@@ -158,6 +184,12 @@ abstract class SpringContextConfig extends FunctionalConfiguration with HoconCon
     }
   }
 
+  def splitPortRange(portRange: String): (String, String) = {
+    val portRangeP = """^([0-9\-]+?)-([0-9\-]+)$""".r
+    val portRangeP(min, max) = portRange
+    (min, max)
+  }
+
   // create stargate reference bean
   def reference[T, S <: T](id: String, interfaceName: String, group: String = null, version: String = null) = bean(id) {
     val rb = new ReferenceBean[T, S]()
@@ -166,6 +198,18 @@ abstract class SpringContextConfig extends FunctionalConfiguration with HoconCon
     rb.setInterfaceName(interfaceName)
     rb.setGroup(group)
     rb.setVersion(version)
+    rb
+  }
+
+  // create stargate service bean
+  def service[T](id: String, interfaceName: String, group: String = null, version: String = null, ref: String) = bean(id) {
+    val rb = new ServiceBean[T]()
+    rb.setBinding(starBinding)
+    rb.setId(id)
+    rb.setInterfaceName(interfaceName)
+    rb.setGroup(group)
+    rb.setVersion(version)
+    rb.setTargetBeanName(ref)
     rb
   }
 }
