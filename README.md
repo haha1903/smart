@@ -8,12 +8,12 @@
 
 sbt 中
 
-    libraryDependencies += "com.baidu" %% "smartext" % "1.0.0"
+    libraryDependencies += "com.scalaone" %% "smartext" % "1.0.0"
 
 maven 中
 
     <dependency>
-        <groupId>com.baidu</groupId>
+        <groupId>com.scalaone</groupId>
         <artifactId>smartext_2.11</artifactId>
         <version>1.0.0</version/
     </dependency>
