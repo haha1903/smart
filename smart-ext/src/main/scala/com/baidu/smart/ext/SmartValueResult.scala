@@ -1,4 +1,4 @@
-package com.baidu.smart.ext
+package com.scalaone.smart.ext
 
 import java.text.SimpleDateFormat
 

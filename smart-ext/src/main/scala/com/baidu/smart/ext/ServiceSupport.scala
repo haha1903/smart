@@ -1,4 +1,4 @@
-package com.baidu.smart.ext
+package com.scalaone.smart.ext
 
 import org.scalatra.swagger.{Swagger, SwaggerSupport}
 import org.scalatra.{RouteTransformer, ScalatraBase, Get, Post}

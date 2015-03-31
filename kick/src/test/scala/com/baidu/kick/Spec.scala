@@ -1,4 +1,4 @@
-package com.baidu.kick
+package com.scalaone.kick
 
 import java.util.concurrent.{Callable, FutureTask, Executors}
 

@@ -1,9 +1,9 @@
-package com.baidu.smart.ext
+package com.scalaone.smart.ext
 
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
-import com.baidu.smart.ext.Sharding._
+import com.scalaone.smart.ext.Sharding._
 
 import scala.language.implicitConversions
 import scala.slick.SlickException

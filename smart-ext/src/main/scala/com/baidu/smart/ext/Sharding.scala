@@ -1,4 +1,4 @@
-package com.baidu.smart.ext
+package com.scalaone.smart.ext
 
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox._
@@ -26,7 +26,7 @@ object Sharding {
   }
 }
 
-import com.baidu.smart.ext.Sharding._
+import com.scalaone.smart.ext.Sharding._
 
 class TableQueryExt[E <: AbstractTable[_]](cons: Tag => E) extends TableQuery[E](cons) {
   override def withFilter[T: CanBeQueryCondition](f: E => T) = filterHelper(f, identity)

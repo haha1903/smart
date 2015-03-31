@@ -1,5 +1,5 @@
 /*
-package com.baidu.smart
+package com.scalaone.smart
 
 import org.scalatra.test.specs2._
 

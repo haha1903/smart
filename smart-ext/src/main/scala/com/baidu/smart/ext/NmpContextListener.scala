@@ -1,4 +1,4 @@
-package com.baidu.smart.ext
+package com.scalaone.smart.ext
 
 import com.baidu.nmp.base.utils.concurrent.GlobalExecutor
 import org.springframework.context.event.ContextClosedEvent

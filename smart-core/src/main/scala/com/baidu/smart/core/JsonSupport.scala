@@ -1,4 +1,4 @@
-package com.baidu.smart.core
+package com.scalaone.smart.core
 
 import org.json4s.{JsonInput, Formats, Extraction}
 import org.json4s.jackson.JsonMethods._

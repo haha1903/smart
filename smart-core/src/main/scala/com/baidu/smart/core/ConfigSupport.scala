@@ -1,4 +1,4 @@
-package com.baidu.smart.core
+package com.scalaone.smart.core
 
 import com.typesafe.config.{Config, ConfigException, ConfigFactory}
 

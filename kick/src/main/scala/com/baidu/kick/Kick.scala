@@ -1,9 +1,7 @@
-package com.baidu.kick
+package com.scalaone.kick
 
-import java.util.concurrent.Executors
-
-import com.baidu.smart.core.ConfigSupport
 import com.redis._
+import com.scalaone.smart.core.ConfigSupport
 import grizzled.slf4j.Logging
 import org.json4s.jackson.JsonMethods._
 import org.json4s.{DefaultFormats, Extraction}
@@ -18,12 +16,12 @@ object PushSupport {
   val listeners = scala.collection.mutable.Map[PushApp, PushMessage => Any]()
 }
 
-import com.baidu.kick.PushSupport._
+import com.scalaone.kick.PushSupport._
 
 trait PushSupport extends Logging with ConfigSupport {
   val pushEnabled = getBooleanOr("kick.enable", true)
   lazy val pushAddress = PushAddress(getString("kick.host"), getInt("kick.port"), getInt("kick.database"))
-  private[this] val MSG_KEY = "com.baidu.kick.PushSupport.message"
+  private[this] val MSG_KEY = "com.scalaone.kick.PushSupport.message"
   private[this] implicit val jsonFormats = DefaultFormats
 
   private[this] def channel(app: PushApp) = {

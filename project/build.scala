@@ -2,7 +2,7 @@ import sbt._
 import sbt.Keys._
 
 object build extends Build {
-  val Organization = "com.baidu"
+  val Organization = "com.scalaone"
   val Version = "1.1.6"
   val ScalaVersion = "2.11.5"
   val ScalatraVersion = "2.3.6"
@@ -43,7 +43,7 @@ object build extends Build {
         "com.baidu.nmp" % "nmp-client" % "1.14.0-RELEASE" excludeAll(
           ExclusionRule("commons-httpclient"),
           ExclusionRule("org.apache.httpcomponents"),
-          ExclusionRule("com.baidu.lego"),
+          ExclusionRule("com.scalaone.lego"),
           ExclusionRule("com.google.guava"),
           ExclusionRule("org.apache.poi", "poi-ooxml")
           ),
@@ -70,12 +70,16 @@ object build extends Build {
     version := Version,
     scalaVersion := ScalaVersion,
     scalacOptions ++= Seq("-deprecation", "-feature"),
-    resolvers ++= Seq("ma03" at "http://cq01-testing-ma03.vm.baidu.com:8304/archiva/repository/ma/",
-      "nexus-m2" at "http://cq01-rdqa-pool106.cq01.baidu.com:8081/nexus/content/groups/public/",
+    resolvers ++= Seq("nexus-m2" at "http://cq01-rdqa-pool106.cq01.baidu.com:8081/nexus/content/groups/public/",
       Resolver.url("nexus-ivy", url("http://cq01-rdqa-pool106.cq01.baidu.com:8081/nexus/content/groups/public/"))(Resolver.ivyStylePatterns)
     ),
     externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false),
-    publishTo := Some("ma03" at "http://cq01-testing-ma03.vm.baidu.com:8304/archiva/repository/ma/"),
-    credentials += Credentials(Path.userHome / ".ivy2" / ".ma03_credentials")
+    publishTo := {
+      if (isSnapshot.value)
+        Some("snapshots" at "https://oss.sonatype.org/content/repositories/snapshots")
+      else
+        Some("releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2")
+    },
+    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
   )
 }

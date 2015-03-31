@@ -1,4 +1,4 @@
-package com.baidu.smart.ext
+package com.scalaone.smart.ext
 
 import org.scalatra.ScalatraBase
 import org.scalatra.commands.{Command, CommandExecutor, ParamsOnlyCommandSupport}

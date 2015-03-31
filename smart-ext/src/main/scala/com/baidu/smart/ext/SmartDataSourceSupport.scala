@@ -1,16 +1,11 @@
-package com.baidu.smart.ext
+package com.scalaone.smart.ext
 
 import javax.sql.DataSource
 
-import com.baidu.smart.core.ConfigSupport
+import com.scalaone.smart.core.ConfigSupport
 
 import scala.slick.driver.MySQLDriver.simple._
 
-/**
- *
- * @author Guan Hao <guanhao@baidu.com>
- *         2014/07/23 14:18
- */
 trait SmartDataSourceSupport extends ConfigSupport {
 
   val ds: DataSource

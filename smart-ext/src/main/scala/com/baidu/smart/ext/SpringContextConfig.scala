@@ -1,4 +1,4 @@
-package com.baidu.smart.ext
+package com.scalaone.smart.ext
 
 import java.lang.{Boolean, Double, Float, Long}
 import java.util
@@ -9,7 +9,7 @@ import com.baidu.fengchao.stargate.assembly.spring.schema.bean._
 import com.baidu.fengchao.stargate.common.utils.LocalCacheUtils
 import com.baidu.nmp.base.utils.property.{Key, PropertyFileReader}
 import com.baidu.nmp.base.utils.{BaseConfig, BaseConfigKey, BaseMessage, BaseMessageKey}
-import com.baidu.smart.core.ConfigSupport
+import com.scalaone.smart.core.ConfigSupport
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.core.env.{MutablePropertySources, PropertySource, StandardEnvironment}
 import org.springframework.scala.context.function.FunctionalConfiguration
@@ -77,7 +77,7 @@ object SpringContextConfig extends HoconConfig {
   init()
 }
 
-import com.baidu.smart.ext.SpringContextConfig._
+import com.scalaone.smart.ext.SpringContextConfig._
 
 abstract class SpringContextConfig extends FunctionalConfiguration with HoconConfig {
   // delegate BaseConfig to application.conf

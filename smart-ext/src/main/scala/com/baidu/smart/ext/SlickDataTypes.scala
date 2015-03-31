@@ -1,11 +1,11 @@
-package com.baidu.smart.ext
+package com.scalaone.smart.ext
 
 import java.sql
 import java.sql.{PreparedStatement, ResultSet, Timestamp}
 import java.text.SimpleDateFormat
 import java.util.Date
 
-import com.baidu.smart.ext.MySQLDriverExt._
+import com.scalaone.smart.ext.MySQLDriverExt._
 
 import scala.language.implicitConversions
 
@@ -26,7 +26,7 @@ object AdStatus extends Enumeration {
 
 class AdStatusJdbcType extends DriverJdbcType[AdStatus.Value] {
 
-  import com.baidu.smart.ext.AdStatus.Value
+  import com.scalaone.smart.ext.AdStatus.Value
 
   def sqlType = java.sql.Types.VARCHAR
 

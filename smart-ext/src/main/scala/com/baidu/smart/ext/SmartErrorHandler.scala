@@ -1,4 +1,4 @@
-package com.baidu.smart.ext
+package com.scalaone.smart.ext
 
 import grizzled.slf4j.Logging
 import org.scalatra.{ErrorHandler, ScalatraServlet}
